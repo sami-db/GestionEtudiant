@@ -25,8 +25,8 @@ public class EtudiantServiceImp implements EtudiantService {
     @Override
     public Etudiant modifierEtudiant(Long id, Etudiant etudiantDetails) {
         return etudiantRepository.findById(id).map(etudiant -> {
-            etudiant.setPhoto(etudiantDetails.getNom());
-            etudiant.setPhoto(etudiantDetails.getPrenom());
+            etudiant.setNom(etudiantDetails.getNom());
+            etudiant.setPrenom(etudiantDetails.getPrenom());
             etudiant.setPhoto(etudiantDetails.getPhoto());
             etudiant.setClasse(etudiantDetails.getClasse());
             return etudiantRepository.save(etudiant);
