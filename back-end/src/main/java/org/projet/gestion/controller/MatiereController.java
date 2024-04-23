@@ -1,5 +1,7 @@
 package org.projet.gestion.controller;
 
+import org.projet.gestion.model.Classe;
+import org.projet.gestion.model.Etudiant;
 import org.projet.gestion.model.Matiere;
 import org.projet.gestion.service.interfaces.MatiereService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,18 @@ public class MatiereController {
 
     @Autowired
     private MatiereService matiereService;
+    
+    
+    @GetMapping("/afficherMatieres")
+    public Iterable<Matiere> afficherMatieres() {
+        return matiereService.afficherMatieres();
+    }
+    
+    @GetMapping("/afficherMatiere/{id}")
+    public Matiere afficherEtudiant(@PathVariable Long id) {
+        return matiereService.afficherMatiere(id);
+    }
+    
     @PostMapping("/ajouterMatiere")
     public Matiere ajouterMatiere(@RequestBody Matiere matiere) {
         return matiereService.creerMatiere(matiere);

@@ -1,5 +1,6 @@
 package org.projet.gestion.service.implement;
 
+import org.projet.gestion.model.Etudiant;
 import org.projet.gestion.model.Matiere;
 import org.projet.gestion.repository.DevoirRepository;
 import org.projet.gestion.repository.MatiereRepository;
@@ -16,6 +17,19 @@ public class MatiereServiceImp implements MatiereService {
     @Autowired
     private DevoirRepository devoirRepository;
 
+    
+    @Override
+    public Iterable<Matiere> afficherMatieres() {
+        return matiereRepository.findAll();
+    }
+    
+    @Override
+    public Matiere afficherMatiere(Long id) {
+        return matiereRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Matiere non trouvée avec l'ID : " + id));
+    }
+    
+        
     @Override
     public Matiere creerMatiere(Matiere matiere) {
         return matiereRepository.save(matiere);
