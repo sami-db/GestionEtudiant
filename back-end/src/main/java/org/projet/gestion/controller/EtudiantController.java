@@ -37,16 +37,12 @@ public class EtudiantController {
     public Iterable<Etudiant> afficherEtudiants() {
         return etudiantService.afficherEtudiants();
     }
-<<<<<<< Updated upstream
-    
+
     @GetMapping("/afficherEtudiant/{id}")
     public Etudiant afficherEtudiant(@PathVariable Long id) {
         return etudiantService.afficherEtudiant(id);
     }
-    
-=======
 
->>>>>>> Stashed changes
     @PostMapping("/creerEtudiant")
     public ResponseEntity<?> creerEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
         if (etudiantDTO.getNomEtudiant() == null || etudiantDTO.getNomEtudiant().trim().isEmpty()) {
