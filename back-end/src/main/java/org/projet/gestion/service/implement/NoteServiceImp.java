@@ -6,6 +6,7 @@ import org.projet.gestion.model.Etudiant;
 import org.projet.gestion.model.Matiere;
 import org.projet.gestion.model.Note;
 import org.projet.gestion.model.PartieDevoir;
+import org.projet.gestion.repository.EtudiantRepository;
 import org.projet.gestion.repository.NoteRepository;
 import org.projet.gestion.service.interfaces.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +17,33 @@ import java.util.stream.Collectors;
 
 @Service
 public class NoteServiceImp implements NoteService {
+    
     private final NoteRepository noteRepository;
+    private final EtudiantRepository etudiantRepository;
 
     @Autowired
-    public NoteServiceImp(NoteRepository noteRepository) {
+    public NoteServiceImp(NoteRepository noteRepository, EtudiantRepository etudiantRepository) {
         this.noteRepository = noteRepository;
+        this.etudiantRepository = etudiantRepository;
     }
-
+    
     @Override
     public List<NoteDTO> getNotesParEtudiant(Long etudiantId) {
         return noteRepository.findByEtudiantId(etudiantId).stream()
                               .map(this::convertToNoteDTO)
                               .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<NoteDTO> getNotesParClasse(Long classeId) {
+        List<Etudiant> etudiants = etudiantRepository.findByClasse_Id(classeId);
+        return etudiants.stream()
+                        .flatMap(etudiant -> noteRepository.findByEtudiantId(etudiant.getId()).stream())
+                        .map(this::convertToNoteDTO)
+                        .collect(Collectors.toList());
+    }
+
+
 
     private NoteDTO convertToNoteDTO(Note note) {
         NoteDTO dto = new NoteDTO();

@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface NoteService {
     List<NoteDTO> getNotesParEtudiant(Long etudiantId);
+    List<NoteDTO> getNotesParClasse(Long classeId);
+
 }

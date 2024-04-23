@@ -8,6 +8,7 @@ import org.projet.gestion.dto.ClasseDTO;
 import org.projet.gestion.dto.EtudiantDTO;
 import org.projet.gestion.model.Classe;
 import org.projet.gestion.model.Etudiant;
+import org.projet.gestion.model.Matiere;
 import org.projet.gestion.repository.ClasseRepository;
 import org.projet.gestion.repository.EtudiantRepository;
 import org.projet.gestion.service.interfaces.ClasseService;
@@ -31,6 +32,12 @@ public class ClasseServiceImp implements ClasseService {
     @Override
     public Iterable<Classe> afficherClasses() {
         return classeRepository.findAll();
+    }
+    
+    @Override
+    public Classe afficherClasse(Long id) {
+        return classeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Classe non trouvée avec l'ID : " + id));
     }
 
     @Transactional

@@ -1,8 +1,13 @@
 package org.projet.gestion.controller;
 
+import java.util.List;
+
 import org.projet.gestion.dto.ClasseDTO;
+import org.projet.gestion.dto.NoteDTO;
 import org.projet.gestion.model.Classe;
+import org.projet.gestion.model.Matiere;
 import org.projet.gestion.service.interfaces.ClasseService;
+import org.projet.gestion.service.interfaces.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +15,30 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class ClasseController {
-    @Autowired
-    private ClasseService classeService;
+    private final ClasseService classeService;
+    private final NoteService noteService;
 
-    @GetMapping("/afficherClasse")
+    @Autowired
+    public ClasseController(ClasseService classeService, NoteService noteService) {
+        this.classeService = classeService;
+        this.noteService = noteService;
+    }
+
+    @GetMapping("/afficherClasses")
     public Iterable<Classe> afficherClasses() {
         return classeService.afficherClasses();
     }
 
-    //@GetMapping("/afficherBulletin")
-    //public Iterable<Classe> afficherBulletin() {
-    //    return classeService.afficherBulletin();
-    //}
+    @GetMapping("/afficherClasse/{id}")
+    public Classe afficherClasse(@PathVariable Long id) {
+        return classeService.afficherClasse(id);
+    }
+
+    @GetMapping("/afficherNoteParClasse/{id}")
+    public ResponseEntity<List<NoteDTO>> getNotesParClasse(@PathVariable Long id) {
+        List<NoteDTO> notes = noteService.getNotesParClasse(id);
+        return ResponseEntity.ok(notes);
+    }
 
     @PostMapping("/creerClasse")
     public ResponseEntity<Classe> createClasse(@RequestBody ClasseDTO classeDTO) {
@@ -34,9 +51,9 @@ public class ClasseController {
         return classeService.modifierClasse(id, classe);
     }
 
-
     @DeleteMapping("/supprimerClasse/{id}")
     public void supprimerClasse(@PathVariable Long id) {
         classeService.supprimerClasse(id);
     }
 }
+
