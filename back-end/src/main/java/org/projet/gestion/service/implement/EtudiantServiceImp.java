@@ -18,6 +18,13 @@ public class EtudiantServiceImp implements EtudiantService {
     }
     
     @Override
+    public Etudiant afficherEtudiant(Long id) {
+        return etudiantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Etudiant non trouvé avec l'ID : " + id));
+    }
+
+    
+    @Override
     public Etudiant creerEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
     }

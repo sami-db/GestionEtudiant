@@ -31,9 +31,14 @@ public class EtudiantController {
         this.noteService = noteService;
     }
     
-    @GetMapping("/afficherEtudiant")
-    public Iterable<Etudiant> afficherEtudiant() {
+    @GetMapping("/afficherEtudiants")
+    public Iterable<Etudiant> afficherEtudiants() {
         return etudiantService.afficherEtudiants();
+    }
+    
+    @GetMapping("/afficherEtudiant/{id}")
+    public Etudiant afficherEtudiant(@PathVariable Long id) {
+        return etudiantService.afficherEtudiant(id);
     }
     
     @PostMapping("/creerEtudiant")
