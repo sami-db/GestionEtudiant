@@ -1,6 +1,7 @@
 package org.projet.gestion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Etudiant {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "classe_id")
+    @JsonIgnoreProperties({"etudiants"})
     private Classe classe;
 
 }

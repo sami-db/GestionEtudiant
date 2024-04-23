@@ -2,7 +2,9 @@ package org.projet.gestion.controller;
 
 import java.util.List;
 
+import org.projet.gestion.dto.EtudiantDTO;
 import org.projet.gestion.dto.NoteDTO;
+import org.projet.gestion.model.Classe;
 import org.projet.gestion.model.Etudiant;
 import org.projet.gestion.model.Note;
 import org.projet.gestion.service.interfaces.EtudiantService;
@@ -35,16 +37,37 @@ public class EtudiantController {
     public Iterable<Etudiant> afficherEtudiants() {
         return etudiantService.afficherEtudiants();
     }
+<<<<<<< Updated upstream
     
     @GetMapping("/afficherEtudiant/{id}")
     public Etudiant afficherEtudiant(@PathVariable Long id) {
         return etudiantService.afficherEtudiant(id);
     }
     
+=======
+
+>>>>>>> Stashed changes
     @PostMapping("/creerEtudiant")
-    public Etudiant creerEtudiant(@RequestBody Etudiant etudiant) {
-        return etudiantService.creerEtudiant(etudiant);
+    public ResponseEntity<?> creerEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
+        if (etudiantDTO.getNomEtudiant() == null || etudiantDTO.getNomEtudiant().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Le nom de l'étudiant est obligatoire.");
+        }
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setNom(etudiantDTO.getNomEtudiant());
+        etudiant.setPrenom(etudiantDTO.getPrenomEtudiant());
+        etudiant.setPhoto(etudiantDTO.getPhotoEtudiant());
+
+        if (etudiantDTO.getClasseId() != null) {
+            Classe classe = new Classe();
+            classe.setId(etudiantDTO.getClasseId());
+            etudiant.setClasse(classe);
+        }
+
+        Etudiant etudiantCree = etudiantService.creerEtudiant(etudiant);
+        return ResponseEntity.ok(etudiantCree);
     }
+
 
     @PutMapping("/modifierEtudiant/{id}")
     public Etudiant modifierEtudiant(@PathVariable Long id, @RequestBody Etudiant etudiant) {

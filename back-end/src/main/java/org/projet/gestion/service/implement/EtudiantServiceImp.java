@@ -1,6 +1,8 @@
 package org.projet.gestion.service.implement;
 
 import org.projet.gestion.model.Etudiant;
+import org.projet.gestion.model.Classe;
+import org.projet.gestion.repository.ClasseRepository;
 import org.projet.gestion.repository.EtudiantRepository;
 import org.projet.gestion.service.interfaces.EtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,14 @@ public class EtudiantServiceImp implements EtudiantService {
 	@Autowired
     private EtudiantRepository etudiantRepository;
 
+    @Autowired
+    private ClasseRepository classeRepository;
+
     @Override
     public Iterable<Etudiant> afficherEtudiants() {
         return etudiantRepository.findAll();
     }
-    
+
     @Override
     public Etudiant afficherEtudiant(Long id) {
         return etudiantRepository.findById(id)
@@ -26,8 +31,21 @@ public class EtudiantServiceImp implements EtudiantService {
     
     @Override
     public Etudiant creerEtudiant(Etudiant etudiant) {
+        if (etudiant.getNom() == null || etudiant.getNom().trim().isEmpty()) {
+            throw new IllegalArgumentException("Le nom de l'étudiant ne peut pas être vide.");
+        }
+
+        if (etudiant.getClasse() != null && etudiant.getClasse().getId() != null) {
+            Classe classe = classeRepository.findById(etudiant.getClasse().getId())
+                    .orElseThrow(() -> new RuntimeException("Classe non trouvée avec l'ID: " + etudiant.getClasse().getId()));
+            etudiant.setClasse(classe);
+        } else {
+            etudiant.setClasse(null);
+        }
         return etudiantRepository.save(etudiant);
     }
+
+
 
     @Override
     public Etudiant modifierEtudiant(Long id, Etudiant etudiantDetails) {
