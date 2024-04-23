@@ -1,0 +1,16 @@
+.button-row {
+  margin-left: 4em;
+  align-items: center;
+}
+
+.mat-mdc-button-base {
+  cursor: pointer;
+  border-radius: 50px;
+  height: 3em;
+}
+
+.mdc-button:hover {
+  cursor: pointer;
+  border-radius: 50px;
+  z-index: auto;
+}

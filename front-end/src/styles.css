@@ -1,0 +1,77 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+body {
+  background-color: #FDFDF6;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0px;
+}
+
+mio-root.green {
+  --mio-theme-color-on-surface-variant-2: linear-gradient(0deg, rgba(67, 73, 62, .08), rgba(67, 73, 62, .08));
+  --mio-theme-color-on-surface-variant-4: linear-gradient(0deg, rgba(67, 73, 62, .12), rgba(67, 73, 62, .12));
+  --mio-theme-color-on-surface-2: linear-gradient(0deg, rgba(26, 28, 24, .08), rgba(26, 28, 24, .08)), var(--mio-theme-color-secondary-container);
+  --mio-theme-color-on-surface-4: linear-gradient(0deg, rgba(26, 28, 24, .12), rgba(26, 28, 24, .12)), var(--mio-theme-color-secondary-container);
+  --mio-theme-color-white: #fff;
+  --mio-theme-color-on-background: #1a1c18;
+  --mio-theme-color-background: #fdfdf6;
+  --mio-theme-color-on-surface: #1a1c18;
+  --mio-theme-color-on-surface-variant: #43493e;
+  --mio-theme-color-surface-0: #fdfdf6;
+  --mio-theme-color-surface-variant: #dfe4d6;
+  --mio-theme-color-inverse-surface: #2f312c;
+  --mio-theme-color-inverse-on-surface: #f1f1ea;
+  --mio-theme-color-primary: #386a20;
+  --mio-theme-color-primary-80: #9cd67d;
+  --mio-theme-color-primary-30: #205107;
+  --mio-theme-color-primary-20: #0c3900;
+  --mio-theme-color-on-primary: #fff;
+  --mio-theme-color-primary-container: #b8f397;
+  --mio-theme-color-on-primary-container: #042100;
+  --mio-theme-color-secondary: #55624c;
+  --mio-theme-color-on-secondary: #fff;
+  --mio-theme-color-secondary-container: #d9e7cb;
+  --mio-theme-color-on-secondary-container: #131f0d;
+  --mio-theme-color-tertiary-container: #bbebeb;
+  --mio-theme-color-on-tertiary-container: #002021;
+  --mio-theme-color-utility-error: #ba1b1b;
+  --mio-theme-color-utility-on-error: #fff;
+  --mio-theme-color-utility-outline: #74796e;
+  --mio-theme-color-surface-1: #f0f3e8;
+  --mio-theme-color-surface-2: #ebefe2;
+  --mio-theme-color-surface-3: #e5eadc;
+  --mio-theme-color-surface-4: #e3e9da;
+  --mio-theme-color-surface-5: #dfe6d5;
+  --mio-theme-color-ref-secondary-200: #bdcbb0;
+  --mio-theme-color-ref-secondary-300: #a1b095;
+  --mio-theme-color-ref-neutral-100: #e3e3e3;
+  --mio-theme-color-ref-neutral-200: #c7c7c7;
+}
+
+.active-button {
+  background-color: #386A20 !important;
+  color: #F0F3E8 !important;
+}
+
+.no-active-button {
+  background-color: #F0F3E8 !important;
+}
+
+.align-center {
+  margin: 1em;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+}
+
+mat-card {
+  overflow: auto;
+}
+
+mat-card-content {
+  min-width: 600px;
+  max-width: 600px;
+  text-align: center;
+}

@@ -1,0 +1,18 @@
+.main-content {
+  box-sizing: border-box;
+  padding: 6em 0;
+  width: 100%;
+}
+
+app-navbar {
+  position: fixed;
+  height: 5em;
+  background-color: #F0F3E8;
+  color: var(--mio-theme-color-on-surface-variant);
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-radius: 40px;
+  align-content: center;
+}

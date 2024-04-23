@@ -1,0 +1,7 @@
+<div class="button-row">
+  <button mat-raised-button [ngClass]="coleurAccueilClassActive" [routerLink]="'/'">Gestion de notation</button>
+  <button mat-raised-button [ngClass]="coleurClasseClassActive" [routerLink]="'/classes'">Classe</button>
+  <button mat-raised-button [ngClass]="coleurEtudiantClassActive" [routerLink]="'/etudiants'">Etudiant</button>
+  <button mat-raised-button [ngClass]="coleurMatiereClassActive" [routerLink]="'/matieres'">Matiere</button>
+  <button mat-raised-button [ngClass]="coleurDevoirClassActive" (click)="afficherMessage()">Devoir</button>
+</div>

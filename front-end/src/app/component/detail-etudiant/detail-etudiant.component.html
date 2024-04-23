@@ -1,0 +1,63 @@
+<div class="align-center">
+  <mat-card>
+    <mat-card-content>
+      @if (etudiant.id == null) {
+      <mat-label>
+        <p>Création</p>
+      </mat-label>
+      } @else {
+      <mat-label>
+        <p>Modification</p>
+      </mat-label>
+      }
+      <form class="example-form" [formGroup]="etudiantFormGroup">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nom</mat-label>
+          <input name="nom" matInput type="text" placeholder="Ex. Dupont" [(ngModel)]="etudiant.nom"
+            [formControl]="nomCtrlForm">
+          @if (etudiant.nom) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="etudiant.nom=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <mat-error>{{getMessageErreur(nomCtrlForm)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Prénom</mat-label>
+          <input name="prenom" matInput type="text" [(ngModel)]="etudiant.prenom" [formControl]="prenomCtrlForm">
+          @if (etudiant.prenom) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="etudiant.prenom=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          }<mat-error>{{getMessageErreur(prenomCtrlForm)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Photo</mat-label>
+          <input name="photo" matInput type="text" readonly="readonly">
+          <label for="photo"><mat-icon>attach_file</mat-icon></label>
+          <input id="photo" type="file" style="display: none" accept="image/*" (change)="selectFile($event)" />
+          @if (etudiant.photo) {
+          <img width="30px" height="30px" [src]="etudiant.photo" />
+          }
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label for="classSelect">Classe</mat-label>
+          <mat-select name="classSelect" [(ngModel)]="etudiant.classeId" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]=""></mat-option>
+            @for (classe of classeList; track classe) {
+            <mat-option [value]="classe.id">{{classe.nom}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-card-actions class="example-full-width align-center">
+          <button mat-fab extended color="primary" (click)="enregistrer()">
+            Enregister
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
