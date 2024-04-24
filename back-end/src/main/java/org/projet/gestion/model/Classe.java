@@ -4,6 +4,10 @@ package org.projet.gestion.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,6 +41,7 @@ public class Classe {
     @OneToMany(mappedBy = "classe", fetch = FetchType.EAGER)
     private Set<Etudiant> etudiants;
     
+    @JsonIgnoreProperties("classe") // Ajout pour éviter la récursivité
     @OneToMany(mappedBy = "classe", cascade = CascadeType.ALL)
     private Set<Devoir> devoirs = new HashSet<>();
 }

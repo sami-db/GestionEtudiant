@@ -1,5 +1,10 @@
 package org.projet.gestion.service.implement;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.projet.gestion.dto.DevoirDTO;
 import org.projet.gestion.model.Devoir;
 import org.projet.gestion.model.PartieDevoir;
 import org.projet.gestion.repository.DevoirRepository;
@@ -7,8 +12,6 @@ import org.projet.gestion.repository.PartieDevoirRepository;
 import org.projet.gestion.service.interfaces.DevoirService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class DevoirServiceImp implements DevoirService {
@@ -42,10 +45,28 @@ public class DevoirServiceImp implements DevoirService {
     }
 
     @Override
-    public Iterable<Devoir> listerDevoirs() {
-        return devoirRepository.findAll();
+    public Iterable<DevoirDTO> listerDevoirs() {
+        return devoirRepository.findAll().stream()
+                .map(this::convertToDevoirDTO)
+                .collect(Collectors.toList());
     }
 
+    private DevoirDTO convertToDevoirDTO(Devoir devoir) {
+        DevoirDTO dto = new DevoirDTO();
+        dto.setId(devoir.getId());
+        dto.setType(devoir.getType());
+        dto.setDate(devoir.getDate());
+        dto.setCoefficient(devoir.getCoefficient());
+        if (devoir.getMatiere() != null) {
+            dto.setNomMatiere(devoir.getMatiere().getDenomination());
+        }
+        if (devoir.getClasse() != null) {
+            dto.setNomClasse(devoir.getClasse().getDenomination());
+        }
+        return dto;
+    }
+    
+    
     @Override
     public Devoir modifierDevoir(Long id, Devoir devoirDetails) {
         return devoirRepository.findById(id).map(devoir -> {

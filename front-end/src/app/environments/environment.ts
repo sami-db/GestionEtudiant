@@ -10,5 +10,9 @@ export const environment = {
   rechercherEtudiantsDisponibles: 'http://localhost:8080/api/afficherEtudiantsSansClasse',
   rechercherMatieres: 'http://localhost:8080/api/afficherMatieres',
   enregistrerMatiere: 'http://localhost:8080/api/creerMatiere',
-  supprimerMatiere: 'http://localhost:8080/api/supprimerMatiere'
+  supprimerMatiere: 'http://localhost:8080/api/supprimerMatiere',
+  rechercherDevoirs: 'http://localhost:8080/api/afficherTousLesDevoirs',
+  supprimerDevoir: 'http://localhost:8080/api/supprimerDevoir',
+  enregistrerDevoir: 'http://localhost:8080/api/creerDevoir'
+
 };

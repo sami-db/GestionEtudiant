@@ -1,11 +1,11 @@
 package org.projet.gestion.service.implement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.projet.gestion.dto.ClasseDTO;
 import org.projet.gestion.model.Classe;
-import org.projet.gestion.model.Devoir;
 import org.projet.gestion.model.Etudiant;
 import org.projet.gestion.repository.ClasseRepository;
 import org.projet.gestion.repository.EtudiantRepository;
@@ -28,10 +28,24 @@ public class ClasseServiceImp implements ClasseService {
         this.etudiantRepository = etudiantRepository;
     }
 
-    @Override
-    public Iterable<Classe> afficherClasses() {
-        return classeRepository.findAll();
-    }
+	@Override
+	public Iterable<ClasseDTO> afficherClasses() {
+	    Iterable<Classe> classes = classeRepository.findAll();
+	    List<ClasseDTO> classeDTOs = new ArrayList<>();
+	    for (Classe classe : classes) {
+	        ClasseDTO classeDTO = mapClasseToDTO(classe);
+	        classeDTOs.add(classeDTO);
+	    }
+	    return classeDTOs;
+	}
+
+	private ClasseDTO mapClasseToDTO(Classe classe) {
+	    ClasseDTO classeDTO = new ClasseDTO();
+	    classeDTO.setId(classe.getId());
+	    classeDTO.setDenomination(classe.getDenomination());
+	    return classeDTO;
+	}
+
     
     @Override
     public Classe afficherClasse(Long id) {

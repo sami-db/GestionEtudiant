@@ -25,7 +25,7 @@ public class ClasseController {
     }
 
     @GetMapping("/afficherClasses")
-    public Iterable<Classe> afficherClasses() {
+    public Iterable<ClasseDTO> afficherClasses() {
         return classeService.afficherClasses();
     }
 

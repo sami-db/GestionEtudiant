@@ -1,0 +1,64 @@
+<div class="align-center">
+  <mat-card>
+    <mat-card-content>
+      @if (devoir.id == null) {
+      <mat-label>
+        <p>Création</p>
+      </mat-label>
+      } @else {
+      <mat-label>
+        <p>Modification</p>
+      </mat-label>
+      }
+      <form class="example-form" [formGroup]="DevoirFormGroup">
+        <mat-form-field class="example-full-width">
+          <mat-label>Type</mat-label>
+          <input name="type" matInput type="text" placeholder="Examen" [(ngModel)]="devoir.type"
+            [formControl]="typeCtrlForm">
+          @if (devoir.type) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="devoir.type=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <mat-error>{{getMessageErreur(typeCtrlForm)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Date</mat-label>
+          <input name="date" matInput type="date" [(ngModel)]="devoir.date" [formControl]="dateCtrlForm">
+          @if (devoir.date) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="clearDate()">
+            <mat-icon>close</mat-icon>
+          </button>
+          }<mat-error>{{getMessageErreur(dateCtrlForm)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label for="classSelect">Classe</mat-label>
+          <mat-select name="classSelect" [(ngModel)]="devoir.classe" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]=""></mat-option>
+            @for (classe of classeList; track classe) {
+            <mat-option [value]="classe.id">{{classe.denomination}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label for="classSelect">Matière</mat-label>
+          <mat-select name="classSelect" [(ngModel)]="devoir.matiere" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]=""></mat-option>
+            @for (matiere of matiereList; track matiere) {
+            <mat-option [value]="matiere.id">{{matiere.denomination}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-card-actions class="example-full-width align-center">
+          <button mat-fab extended color="primary" (click)="enregistrer()">
+            Enregister
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

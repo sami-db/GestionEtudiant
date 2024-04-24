@@ -1,12 +1,20 @@
 package org.projet.gestion.controller;
 
+import org.projet.gestion.dto.DevoirDTO;
 import org.projet.gestion.model.Devoir;
-import org.projet.gestion.model.Etudiant;
 import org.projet.gestion.service.interfaces.DevoirService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
@@ -26,7 +34,7 @@ public class DevoirController {
     }
 
     @GetMapping("/afficherTousLesDevoirs")
-    public Iterable<Devoir> afficherTousLesDevoirs() {
+    public Iterable<DevoirDTO> afficherTousLesDevoirs() {
         return devoirService.listerDevoirs();
     }
 
@@ -35,8 +43,8 @@ public class DevoirController {
         return devoirService.modifierDevoir(id, devoir);
     }
 
-    @DeleteMapping("supprimerDevoir/{id}")
-    public void supprimerDevoir(@PathVariable Long id) {
+    @DeleteMapping("supprimerDevoir")
+    public void supprimerDevoir(@RequestParam Long id) {
         devoirService.supprimerDevoir(id);
     }
 }
