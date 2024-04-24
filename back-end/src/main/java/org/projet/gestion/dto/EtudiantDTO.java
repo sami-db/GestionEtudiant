@@ -7,8 +7,9 @@ import lombok.Setter;
 @Setter
 public class EtudiantDTO {
     private Long id;
-    private String nomEtudiant;
-    private String prenomEtudiant;
-    private String photoEtudiant;
+    private String nom;
+    private String prenom;
+    private String photo;
     private Long classeId;
+    private String nomClasse;
 }

@@ -1,5 +1,6 @@
 package org.projet.gestion.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.projet.gestion.dto.EtudiantDTO;
@@ -32,11 +33,27 @@ public class EtudiantController {
         this.etudiantService = etudiantService;
         this.noteService = noteService;
     }
-    
+
     @GetMapping("/afficherEtudiants")
-    public Iterable<Etudiant> afficherEtudiants() {
-        return etudiantService.afficherEtudiants();
+    public ResponseEntity<List<EtudiantDTO>> afficherEtudiants() {
+        Iterable<Etudiant> etudiants = etudiantService.afficherEtudiants();
+        List<EtudiantDTO> etudiantDTOs = new ArrayList<>();
+
+        for (Etudiant etudiant : etudiants) {
+            EtudiantDTO etudiantDTO = new EtudiantDTO();
+            etudiantDTO.setId(etudiant.getId());
+            etudiantDTO.setNom(etudiant.getNom());
+            etudiantDTO.setPrenom(etudiant.getPrenom());
+            etudiantDTO.setPhoto(etudiant.getPhoto());
+            etudiantDTO.setClasseId(etudiant.getClasse() != null ? etudiant.getClasse().getId() : null);
+            etudiantDTO.setNomClasse(etudiant.getClasse() != null ? etudiant.getClasse().getDenomination() : null);
+
+            etudiantDTOs.add(etudiantDTO);
+        }
+
+        return ResponseEntity.ok(etudiantDTOs);
     }
+
 
     @GetMapping("/afficherEtudiant/{id}")
     public Etudiant afficherEtudiant(@PathVariable Long id) {
@@ -54,14 +71,14 @@ public class EtudiantController {
     
     @PostMapping("/creerEtudiant")
     public ResponseEntity<?> creerEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
-        if (etudiantDTO.getNomEtudiant() == null || etudiantDTO.getPrenomEtudiant().trim().isEmpty()) {
+        if (etudiantDTO.getNom() == null || etudiantDTO.getPrenom().trim().isEmpty()) {
             return ResponseEntity.badRequest().body("Le nom de l'étudiant est obligatoire.");
         }
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setNom(etudiantDTO.getNomEtudiant());
-        etudiant.setPrenom(etudiantDTO.getPrenomEtudiant());
-        etudiant.setPhoto(etudiantDTO.getPhotoEtudiant());
+        etudiant.setNom(etudiantDTO.getNom());
+        etudiant.setPrenom(etudiantDTO.getPrenom());
+        etudiant.setPhoto(etudiantDTO.getPhoto());
 
         if (etudiantDTO.getClasseId() != null) {
             Classe classe = new Classe();
