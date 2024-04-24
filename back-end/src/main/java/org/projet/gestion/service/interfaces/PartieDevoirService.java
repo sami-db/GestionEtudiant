@@ -1,4 +1,4 @@
 package org.projet.gestion.service.interfaces;
 
-public class PartieDevoirService {
+public interface PartieDevoirService {
 }
