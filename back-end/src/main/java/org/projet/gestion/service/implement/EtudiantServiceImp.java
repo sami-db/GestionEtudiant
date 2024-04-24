@@ -1,6 +1,9 @@
 package org.projet.gestion.service.implement;
 
 import org.projet.gestion.model.Etudiant;
+
+import java.util.List;
+
 import org.projet.gestion.model.Classe;
 import org.projet.gestion.repository.ClasseRepository;
 import org.projet.gestion.repository.EtudiantRepository;
@@ -26,6 +29,12 @@ public class EtudiantServiceImp implements EtudiantService {
     public Etudiant afficherEtudiant(Long id) {
         return etudiantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Etudiant non trouvé avec l'ID : " + id));
+    }
+
+    
+    @Override
+    public List<Etudiant> afficherEtudiantsSansClasse() {
+        return etudiantRepository.findByClasseIsNull();
     }
 
     

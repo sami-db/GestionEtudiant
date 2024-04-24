@@ -43,9 +43,18 @@ public class EtudiantController {
         return etudiantService.afficherEtudiant(id);
     }
 
+    
+    @GetMapping("/afficherEtudiantsSansClasse")
+    public ResponseEntity<List<Etudiant>> afficherEtudiantsSansClasse() {
+        List<Etudiant> etudiants = etudiantService.afficherEtudiantsSansClasse();
+        return ResponseEntity.ok(etudiants);
+    }
+
+    
+    
     @PostMapping("/creerEtudiant")
     public ResponseEntity<?> creerEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
-        if (etudiantDTO.getNomEtudiant() == null || etudiantDTO.getNomEtudiant().trim().isEmpty()) {
+        if (etudiantDTO.getNomEtudiant() == null || etudiantDTO.getPrenomEtudiant().trim().isEmpty()) {
             return ResponseEntity.badRequest().body("Le nom de l'étudiant est obligatoire.");
         }
 
