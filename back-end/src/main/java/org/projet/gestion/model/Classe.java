@@ -1,9 +1,18 @@
 
 package org.projet.gestion.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,4 +36,7 @@ public class Classe {
   // une classe et que tu veux renvoyer la classe en retour
     @OneToMany(mappedBy = "classe", fetch = FetchType.EAGER)
     private Set<Etudiant> etudiants;
+    
+    @OneToMany(mappedBy = "classe", cascade = CascadeType.ALL)
+    private Set<Devoir> devoirs = new HashSet<>();
 }

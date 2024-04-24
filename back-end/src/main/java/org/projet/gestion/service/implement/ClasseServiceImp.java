@@ -1,20 +1,19 @@
 package org.projet.gestion.service.implement;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.projet.gestion.dto.ClasseDTO;
-import org.projet.gestion.dto.EtudiantDTO;
 import org.projet.gestion.model.Classe;
+import org.projet.gestion.model.Devoir;
 import org.projet.gestion.model.Etudiant;
-import org.projet.gestion.model.Matiere;
 import org.projet.gestion.repository.ClasseRepository;
 import org.projet.gestion.repository.EtudiantRepository;
 import org.projet.gestion.service.interfaces.ClasseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -69,11 +68,17 @@ public class ClasseServiceImp implements ClasseService {
     }
 
     @Override
-    public void supprimerClasse(Long id) {
-        classeRepository.deleteById(id);
-    }
+    public void supprimerClasse(Long classeId) {
+        Classe classe = classeRepository.findById(classeId)
+                .orElseThrow(() -> new EntityNotFoundException("Classe non trouvée avec l'ID : " + classeId));
 
-    //  afficherBulletin()
+        Set<Etudiant> etudiants = classe.getEtudiants();
+        for (Etudiant etudiant : etudiants) {
+            etudiant.setClasse(null);
+            etudiantRepository.save(etudiant);
+        }
+        classeRepository.delete(classe);
+    }
 }
 
 
