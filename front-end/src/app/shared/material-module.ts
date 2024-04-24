@@ -19,8 +19,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   exports: [
     MatTableModule,
     MatPaginatorModule,
-    HttpClientModule,
-    /*tool tip*/ MatTooltipModule,
+    /*tool tip*/
+    MatTooltipModule,
     MatButtonModule,
     MatIconModule,
     FormsModule,
@@ -29,8 +29,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     MatCheckboxModule,
     /*Formulaire*/
-    FormsModule, MatFormFieldModule, MatInputModule, MatCardModule,
-
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    HttpClientModule,
   ]
 })
 export class MaterialModule { }

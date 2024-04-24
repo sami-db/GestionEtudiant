@@ -36,14 +36,8 @@ public class MatiereController {
         return matiereService.modifierMatiere(id, matiere);
     }
 
-    @DeleteMapping("/supprimerMatiere/{id}")
-    public ResponseEntity<?> supprimerMatiere(@PathVariable Long id) {
-        try {
-            matiereService.supprimerMatiere(id);
-            return ResponseEntity.ok().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    @DeleteMapping("/supprimerMatiere")
+    public void supprimerMatiere(@RequestParam Long id) {
+        matiereService.supprimerMatiere(id);
     }
-
 }
