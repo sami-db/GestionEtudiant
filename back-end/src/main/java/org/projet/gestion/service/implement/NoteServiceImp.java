@@ -12,6 +12,7 @@ import org.projet.gestion.service.interfaces.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,13 +38,17 @@ public class NoteServiceImp implements NoteService {
     @Override
     public List<NoteDTO> getNotesParClasse(Long classeId) {
         List<Etudiant> etudiants = etudiantRepository.findByClasse_Id(classeId);
-        return etudiants.stream()
-                        .flatMap(etudiant -> noteRepository.findByEtudiantId(etudiant.getId()).stream())
-                        .map(this::convertToNoteDTO)
-                        .collect(Collectors.toList());
+        List<NoteDTO> notesDTO = new ArrayList<>();
+        for (Etudiant etudiant : etudiants) {
+            List<Note> notes = noteRepository.findByEtudiantId(etudiant.getId());
+            for (Note note : notes) {
+                NoteDTO dto = convertToNoteDTO(note);
+                notesDTO.add(dto);
+            }
+        }
+        
+        return notesDTO;
     }
-
-
 
     private NoteDTO convertToNoteDTO(Note note) {
         NoteDTO dto = new NoteDTO();
