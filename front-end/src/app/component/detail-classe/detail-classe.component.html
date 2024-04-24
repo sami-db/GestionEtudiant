@@ -14,10 +14,10 @@
       <form class="example-form" [formGroup]="classeFormGroup">
         <mat-form-field class="example-full-width">
           <mat-label>Nom de classe</mat-label>
-          <input name="nom" matInput type="text" placeholder="Ex. Classe STS" [(ngModel)]="classe.nom"
+          <input name="denomination" matInput type="text" placeholder="Ex. Classe STS" [(ngModel)]="classe.denomination"
             [formControl]="nomCtrlForm">
-          @if (classe.nom) {
-          <button matSuffix mat-icon-button aria-label="Clear" (click)="classe.nom=''">
+          @if (classe.denomination) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="classe.denomination=''">
             <mat-icon>close</mat-icon>
           </button>
           }

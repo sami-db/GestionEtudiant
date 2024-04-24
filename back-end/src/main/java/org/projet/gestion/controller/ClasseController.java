@@ -51,8 +51,8 @@ public class ClasseController {
         return classeService.modifierClasse(id, classe);
     }
 
-    @DeleteMapping("/supprimerClasse/{id}")
-    public void supprimerClasse(@PathVariable Long id) {
+    @DeleteMapping("/supprimerClasse")
+    public void supprimerClasse(@RequestParam Long id) {
         classeService.supprimerClasse(id);
     }
 }

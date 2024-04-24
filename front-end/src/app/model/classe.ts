@@ -2,6 +2,6 @@ import { Etudiant } from "./etudiant";
 
 export interface Classe {
   id?: number;
-  nom?: string;
+  denomination?: string;
   etudiants?: Etudiant[];
 }

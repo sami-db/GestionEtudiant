@@ -64,7 +64,7 @@ export class DetailClasseComponent implements OnInit {
    */
   private initFormControl(): void {
     this.nomCtrlForm = this.formBuilder.control(
-      this.classe.nom,
+      this.classe.denomination,
       [Validators.required, Validators.maxLength(100)]
     );
     this.classeFormGroup = this.formBuilder.group({
