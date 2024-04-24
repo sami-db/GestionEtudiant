@@ -33,7 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    HttpClientModule,
+    HttpClientModule
   ]
 })
 export class MaterialModule { }

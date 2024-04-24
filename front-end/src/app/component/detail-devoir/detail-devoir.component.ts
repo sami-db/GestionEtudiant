@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../shared/material-module';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Matiere } from '../../model/matiere';
 import { Devoir } from '../../model/devoir';
 import { Classe } from '../../model/classe';
@@ -33,6 +33,7 @@ export class DetailDevoirComponent implements OnInit {
   DevoirFormGroup!: FormGroup;
   typeCtrlForm!: FormControl;
   dateCtrlForm!: FormControl;
+  devoirCtrlForm!: FormGroup;
   coefficientCtrlForm!: FormControl;
   private subscriptionDevoirAModifier!: Subscription;
 
@@ -56,16 +57,28 @@ export class DetailDevoirComponent implements OnInit {
   ngOnDestroy() {
     this.subscriptionDevoirAModifier.unsubscribe();
   }
+  
 
   /**
    * Cette méthode s'abonner au service de modification pour initialiser l'étudiant à créer ou à modifier.
    */
   private initDevoir(): void {
-    this.subscriptionDevoirAModifier = this.modificationService.objet$.subscribe(
-      (devoirAModifier: Devoir) => {
-        this.devoir = devoirAModifier;
-      });
-  }
+  this.subscriptionDevoirAModifier = this.modificationService.objet$.subscribe(
+    (devoirAModifier: Devoir) => {
+      if (!devoirAModifier.classe) {
+        devoirAModifier.classe = { id: null };
+      }
+      if (!devoirAModifier.matiere) {
+        devoirAModifier.matiere = { id: null };
+      }
+      if (!devoirAModifier.pointsDesParties) {
+        devoirAModifier.pointsDesParties = [];
+      }
+
+      this.devoir = devoirAModifier;
+    });
+}
+
 
   /**
    * Initialiser des controles sur le formulaire.
@@ -135,12 +148,22 @@ export class DetailDevoirComponent implements OnInit {
   }
   
   public enregistrer(): void {
-    this.devoirService.enregistrerDevoir(this.devoir).subscribe({
+
+    const devoirToSend = {
+      type: this.devoir.type,
+      date: this.devoir.date,
+      coefficient: this.devoir.coefficient,
+      matiere: { id: this.devoir.matiere.id },  
+      classe: { id: this.devoir.classe.id },    
+      pointsDesParties: this.devoir.pointsDesParties
+    };
+  
+    this.devoirService.enregistrerDevoir(devoirToSend).subscribe({
       next: value => {
         this.router.navigateByUrl('devoirs');
+        console.log('Devoir enregistré avec succès!');
       },
-      error: err => console.error(err)
+      error: err => console.error("Erreur lors de l'enregistrement: ", err)
     });
   }
-
 }

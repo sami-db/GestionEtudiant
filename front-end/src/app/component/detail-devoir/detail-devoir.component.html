@@ -24,6 +24,18 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
+          <mat-label>Coefficient</mat-label>
+          <input name="coefficient" matInput type="number" placeholder="2" [(ngModel)]="devoir.coefficient"
+            [formControl]="typeCtrlForm">
+          @if (devoir.coefficient) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="devoir.coefficient=0">
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <mat-error>{{getMessageErreur(typeCtrlForm)}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
           <mat-label>Date</mat-label>
           <input name="date" matInput type="date" [(ngModel)]="devoir.date" [formControl]="dateCtrlForm">
           @if (devoir.date) {
@@ -35,7 +47,7 @@
 
         <mat-form-field class="example-full-width">
           <mat-label for="classSelect">Classe</mat-label>
-          <mat-select name="classSelect" [(ngModel)]="devoir.classe" [ngModelOptions]="{standalone: true}">
+          <mat-select name="classSelect" [(ngModel)]="devoir.classe.id" [ngModelOptions]="{standalone: true}">
             <mat-option [value]=""></mat-option>
             @for (classe of classeList; track classe) {
             <mat-option [value]="classe.id">{{classe.denomination}}</mat-option>
@@ -45,8 +57,8 @@
 
         <mat-form-field class="example-full-width">
           <mat-label for="classSelect">Matière</mat-label>
-          <mat-select name="classSelect" [(ngModel)]="devoir.matiere" [ngModelOptions]="{standalone: true}">
-            <mat-option [value]=""></mat-option>
+          <mat-select name="classSelect" [(ngModel)]="devoir.matiere.id" [ngModelOptions]="{standalone: true}">
+            <mat-option [value]=""></mat-option> 
             @for (matiere of matiereList; track matiere) {
             <mat-option [value]="matiere.id">{{matiere.denomination}}</mat-option>
             }
