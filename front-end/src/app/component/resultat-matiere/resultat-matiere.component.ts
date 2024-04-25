@@ -6,6 +6,8 @@ import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {Router, RouterLink} from "@angular/router";
 import {MaterialModule} from "../../shared/material-module";
 import {HttpClientModule} from "@angular/common/http";
+import { ModificationService } from '../../service/modification.service';
+
 
 @Component({
   selector: 'app-resultat-matiere',
@@ -38,7 +40,11 @@ export class ResultatMatiereComponent {
     }
   }
 
-  constructor(private router: Router, private matiereService: MatiereService) {}
+  constructor(
+    private router: Router, 
+    private matiereService: MatiereService, 
+    private modificationService: ModificationService
+  ) {}
 
   ngOnInit(): void {
     this.initMatiereList();
@@ -55,10 +61,12 @@ export class ResultatMatiereComponent {
   }
 
   ajouterMatiere(): void {
+    this.modificationService.envoyerObjetACreerOuModifier({});
     this.router.navigateByUrl('detail-matiere');
   }
 
   modifierMatiere(matiere: Matiere): void {
+    this.modificationService.envoyerObjetACreerOuModifier(matiere);
     this.router.navigateByUrl('detail-matiere');
   }
 
