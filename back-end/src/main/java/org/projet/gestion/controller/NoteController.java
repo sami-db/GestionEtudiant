@@ -18,15 +18,15 @@ public class NoteController {
 
     // Créer ou mettre à jour une note
     @PostMapping("/ajouterNote")
-    public ResponseEntity<NoteDTO> createOrUpdateNote(@RequestBody NoteDTO noteDTO) {
-        NoteDTO savedNote = noteService.createOrUpdateNote(noteDTO.getId(), noteDTO.getEtudiantId(), noteDTO.getPartieDevoirId(), noteDTO.getValeur());
+    public ResponseEntity<NoteDTO> creerNote(@RequestBody NoteDTO noteDTO) {
+        NoteDTO savedNote = noteService.creerNote(noteDTO.getId(), noteDTO.getEtudiantId(), noteDTO.getPartieDevoirId(), noteDTO.getValeur());
         return ResponseEntity.ok(savedNote);
     }
 
     // Supprimer une note
     @DeleteMapping("/supprimerNote")
-    public ResponseEntity<Void> deleteNote(@RequestParam Long noteId) {
-        noteService.deleteNote(noteId);
+    public ResponseEntity<Void> supprimerNote(@RequestParam Long noteId) {
+        noteService.supprimerNote(noteId);
         return ResponseEntity.ok().build();
     }
 }

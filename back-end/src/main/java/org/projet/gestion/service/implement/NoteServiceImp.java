@@ -103,7 +103,7 @@ public class NoteServiceImp implements NoteService {
 
 
     @Override
-    public NoteDTO createOrUpdateNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur) {
+    public NoteDTO creerNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur) {
         Note note;
         if (noteId == null) { // Création d'une nouvelle note
             note = new Note();
@@ -134,7 +134,7 @@ public class NoteServiceImp implements NoteService {
 
 
     @Override
-    public void deleteNote(Long noteId) {
+    public void supprimerNote(Long noteId) {
         noteRepository.deleteById(noteId);
     }
 

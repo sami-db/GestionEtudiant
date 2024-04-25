@@ -6,6 +6,6 @@ import java.util.List;
 public interface NoteService {
     List<NoteDTO> afficherNotesParEtudiant(Long etudiantId);
     List<NoteDTO> afficherNotesParClasse(Long classeId);
-    NoteDTO createOrUpdateNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur);
-    void deleteNote(Long noteId);
+    NoteDTO creerNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur);
+    void supprimerNote(Long noteId);
 }
