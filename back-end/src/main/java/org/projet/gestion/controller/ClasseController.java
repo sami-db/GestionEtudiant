@@ -36,7 +36,7 @@ public class ClasseController {
 
     @GetMapping("/afficherNoteParClasse/{id}")
     public ResponseEntity<List<NoteDTO>> getNotesParClasse(@PathVariable Long id) {
-        List<NoteDTO> notes = noteService.getNotesParClasse(id);
+        List<NoteDTO> notes = noteService.afficherNotesParClasse(id);
         return ResponseEntity.ok(notes);
     }
 

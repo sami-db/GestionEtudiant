@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,16 +31,35 @@ public class NoteServiceImp implements NoteService {
         this.etudiantRepository = etudiantRepository;
         this.partieDevoirRepository = partieDevoirRepository;
     }
-    
+
     @Override
-    public List<NoteDTO> getNotesParEtudiant(Long etudiantId) {
-        return noteRepository.findByEtudiantId(etudiantId).stream()
-                              .map(this::convertToNoteDTO)
-                              .collect(Collectors.toList());
+    public List<NoteDTO> afficherNotesParEtudiant(Long etudiantId) {
+        List<Note> notes = noteRepository.findByEtudiantId(etudiantId);
+
+        // Vérifie que chaque PartieDevoir a bien un Devoir associé
+        notes.removeIf(note -> note.getPartieDevoir() == null || note.getPartieDevoir().getDevoir() == null);
+
+        Map<Long, List<Note>> notesGroupedByDevoir = notes.stream()
+                .collect(Collectors.groupingBy(note -> note.getPartieDevoir().getDevoir().getId()));
+
+        List<NoteDTO> noteDTOSummary = new ArrayList<>();
+        for (Map.Entry<Long, List<Note>> entry : notesGroupedByDevoir.entrySet()) {
+            float totalPoints = entry.getValue().stream().map(Note::getValeur).reduce(0f, Float::sum);
+
+            // Prend la première note pour créer le DTO et lui assigne la somme totale des points
+            NoteDTO dto = entry.getValue().stream().findFirst().map(this::convertToNoteDTO).orElse(new NoteDTO());
+            dto.setValeur(totalPoints);
+            noteDTOSummary.add(dto);
+        }
+
+        return noteDTOSummary;
     }
-    
+
+
+
+
     @Override
-    public List<NoteDTO> getNotesParClasse(Long classeId) {
+    public List<NoteDTO> afficherNotesParClasse(Long classeId) {
         List<Etudiant> etudiants = etudiantRepository.findByClasse_Id(classeId);
         List<NoteDTO> notesDTO = new ArrayList<>();
         for (Etudiant etudiant : etudiants) {

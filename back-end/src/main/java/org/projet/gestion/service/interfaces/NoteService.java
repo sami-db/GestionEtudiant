@@ -4,8 +4,8 @@ import org.projet.gestion.dto.NoteDTO;
 import java.util.List;
 
 public interface NoteService {
-    List<NoteDTO> getNotesParEtudiant(Long etudiantId);
-    List<NoteDTO> getNotesParClasse(Long classeId);
+    List<NoteDTO> afficherNotesParEtudiant(Long etudiantId);
+    List<NoteDTO> afficherNotesParClasse(Long classeId);
     NoteDTO createOrUpdateNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur);
     void deleteNote(Long noteId);
 }

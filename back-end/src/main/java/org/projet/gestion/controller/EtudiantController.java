@@ -96,7 +96,7 @@ public class EtudiantController {
 
     @GetMapping("/afficherNoteParEtudiant/{etudiantId}")
     public ResponseEntity<List<NoteDTO>> getNotesParEtudiant(@PathVariable Long etudiantId) {
-        List<NoteDTO> noteDTOs = noteService.getNotesParEtudiant(etudiantId);
+        List<NoteDTO> noteDTOs = noteService.afficherNotesParEtudiant(etudiantId);
         return ResponseEntity.ok(noteDTOs);
     }
     
