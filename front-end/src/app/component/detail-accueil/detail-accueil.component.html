@@ -1,0 +1,41 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let note"> {{note.id}} </td>
+    </ng-container>
+
+    <!-- Valeur de la Note Column -->
+    <ng-container matColumnDef="valeur">
+      <th mat-header-cell *matHeaderCellDef>Valeur de la Note</th>
+      <td mat-cell *matCellDef="let note"> {{note.valeur}} </td>
+    </ng-container>
+
+    <!-- Étudiants Column -->
+    <ng-container matColumnDef="etudiants">
+      <th mat-header-cell *matHeaderCellDef>Étudiants</th>
+      <td mat-cell *matCellDef="let note">
+        <span *ngFor="let etudiant of note.etudiants; let i = index">
+          {{ etudiant.nom }}{{i < note.etudiants.length - 1 ? ', ' : ''}}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Devoirs Column -->
+    <ng-container matColumnDef="devoirs">
+      <th mat-header-cell *matHeaderCellDef>Devoirs</th>
+      <td mat-cell *matCellDef="let note">
+        <span *ngFor="let devoir of note.devoirs; let i = index">
+          {{ devoir.nom }}{{i < note.devoirs.length - 1 ? ', ' : ''}}
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Sélectionner la page des notes">
+  </mat-paginator>
+</div>
