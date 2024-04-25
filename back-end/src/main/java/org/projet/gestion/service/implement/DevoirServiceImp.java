@@ -22,6 +22,7 @@ public class DevoirServiceImp implements DevoirService {
     @Autowired
     private PartieDevoirRepository partieDevoirRepository;
 
+    // Créer un devoir
     @Override
     public Devoir creerDevoir(Devoir devoir) {
         Devoir savedDevoir = devoirRepository.save(devoir);
@@ -37,16 +38,17 @@ public class DevoirServiceImp implements DevoirService {
                 partieDevoirRepository.save(partieDevoir);
             }
         }
-
         return savedDevoir;
     }
 
+    // Trouver un devoir par ID
     @Override
     public Devoir trouverDevoirParId(Long id) {
         Optional<Devoir> devoir = devoirRepository.findById(id);
         return devoir.orElseThrow(() -> new RuntimeException("Devoir non trouvé avec id : " + id));
     }
 
+    // Lister tous les devoirs
     @Override
     public Iterable<DevoirDTO> listerDevoirs() {
         return devoirRepository.findAll().stream()
@@ -54,6 +56,7 @@ public class DevoirServiceImp implements DevoirService {
                 .collect(Collectors.toList());
     }
 
+    // Convertir un devoir en DTO
     private DevoirDTO convertToDevoirDTO(Devoir devoir) {
         DevoirDTO dto = new DevoirDTO();
         dto.setId(devoir.getId());
@@ -68,8 +71,8 @@ public class DevoirServiceImp implements DevoirService {
         }
         return dto;
     }
-    
-    
+
+    // Modifier un devoir existant
     @Override
     public Devoir modifierDevoir(Long id, Devoir devoirDetails) {
         return devoirRepository.findById(id).map(devoir -> {
@@ -80,6 +83,7 @@ public class DevoirServiceImp implements DevoirService {
         }).orElseThrow(() -> new RuntimeException("Devoir non trouvé avec id : " + id));
     }
 
+    // Supprimer un devoir par ID
     @Override
     public void supprimerDevoir(Long id) {
         devoirRepository.deleteById(id);

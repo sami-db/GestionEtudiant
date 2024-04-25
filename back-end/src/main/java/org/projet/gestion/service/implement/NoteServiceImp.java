@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class NoteServiceImp implements NoteService {
-    
+
     private final NoteRepository noteRepository;
     private final EtudiantRepository etudiantRepository;
     private final PartieDevoirRepository partieDevoirRepository;
@@ -32,21 +32,24 @@ public class NoteServiceImp implements NoteService {
         this.partieDevoirRepository = partieDevoirRepository;
     }
 
+    // Afficher les notes d'un étudiant
     @Override
     public List<NoteDTO> afficherNotesParEtudiant(Long etudiantId) {
         List<Note> notes = noteRepository.findByEtudiantId(etudiantId);
 
-        // Vérifie que chaque PartieDevoir a bien un Devoir associé
+        // Supprimer les notes qui n'ont pas de partie de devoir associée
         notes.removeIf(note -> note.getPartieDevoir() == null || note.getPartieDevoir().getDevoir() == null);
 
+        // Regrouper les notes par devoir
         Map<Long, List<Note>> notesGroupedByDevoir = notes.stream()
                 .collect(Collectors.groupingBy(note -> note.getPartieDevoir().getDevoir().getId()));
 
+        // Créer une liste de DTO résumant les notes pour chaque devoir
         List<NoteDTO> noteDTOSummary = new ArrayList<>();
         for (Map.Entry<Long, List<Note>> entry : notesGroupedByDevoir.entrySet()) {
             float totalPoints = entry.getValue().stream().map(Note::getValeur).reduce(0f, Float::sum);
 
-            // Prend la première note pour créer le DTO et lui assigne la somme totale des points
+            // Prendre la première note pour créer le DTO et lui assigner la somme totale des points
             NoteDTO dto = entry.getValue().stream().findFirst().map(this::convertToNoteDTO).orElse(new NoteDTO());
             dto.setValeur(totalPoints);
             noteDTOSummary.add(dto);
@@ -55,9 +58,7 @@ public class NoteServiceImp implements NoteService {
         return noteDTOSummary;
     }
 
-
-
-
+    // Afficher les notes par classe
     @Override
     public List<NoteDTO> afficherNotesParClasse(Long classeId) {
         List<Etudiant> etudiants = etudiantRepository.findByClasse_Id(classeId);
@@ -69,10 +70,11 @@ public class NoteServiceImp implements NoteService {
                 notesDTO.add(dto);
             }
         }
-        
+
         return notesDTO;
     }
 
+    // Convertir une note en DTO
     private NoteDTO convertToNoteDTO(Note note) {
         NoteDTO dto = new NoteDTO();
         dto.setId(note.getId());
@@ -101,7 +103,7 @@ public class NoteServiceImp implements NoteService {
         return dto;
     }
 
-
+    // Créer ou mettre à jour une note
     @Override
     public NoteDTO creerNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur) {
         Note note;
@@ -132,7 +134,7 @@ public class NoteServiceImp implements NoteService {
         return dto;
     }
 
-
+    // Supprimer une note
     @Override
     public void supprimerNote(Long noteId) {
         noteRepository.deleteById(noteId);

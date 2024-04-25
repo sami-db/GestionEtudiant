@@ -17,24 +17,26 @@ public class MatiereServiceImp implements MatiereService {
     @Autowired
     private DevoirRepository devoirRepository;
 
-    
+    // Afficher toutes les matières
     @Override
     public Iterable<Matiere> afficherMatieres() {
         return matiereRepository.findAll();
     }
-    
+
+    // Afficher une matière par ID
     @Override
     public Matiere afficherMatiere(Long id) {
         return matiereRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Matiere non trouvée avec l'ID : " + id));
     }
-    
-        
+
+    // Créer une nouvelle matière
     @Override
     public Matiere creerMatiere(Matiere matiere) {
         return matiereRepository.save(matiere);
     }
 
+    // Modifier les détails d'une matière
     @Override
     public Matiere modifierMatiere(Long id, Matiere matiereDetails) {
         return matiereRepository.findById(id).map(matiere -> {
@@ -43,6 +45,7 @@ public class MatiereServiceImp implements MatiereService {
         }).orElseThrow(() -> new RuntimeException("Matiere non trouvée avec id : " + id));
     }
 
+    // Supprimer une matière par ID
     @Override
     public void supprimerMatiere(Long id) {
         long count = devoirRepository.countByMatiereId(id);
