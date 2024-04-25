@@ -18,8 +18,7 @@ export const myCustomTooltipDefaults: MatTooltipDefaultOptions = {
 @Component({
   selector: 'app-resultat-etudiant',
   standalone: true,
-  imports: [MaterialModule, HttpClientModule, RouterLink
-  ],
+  imports: [MaterialModule, HttpClientModule, RouterLink],
   providers: [EtudiantService, { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: myCustomTooltipDefaults }],
   templateUrl: './resultat-etudiant.component.html',
   styleUrl: './resultat-etudiant.component.css'
