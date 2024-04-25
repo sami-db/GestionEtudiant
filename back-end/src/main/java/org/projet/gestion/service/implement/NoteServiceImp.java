@@ -8,6 +8,7 @@ import org.projet.gestion.model.Note;
 import org.projet.gestion.model.PartieDevoir;
 import org.projet.gestion.repository.EtudiantRepository;
 import org.projet.gestion.repository.NoteRepository;
+import org.projet.gestion.repository.PartieDevoirRepository;
 import org.projet.gestion.service.interfaces.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,13 @@ public class NoteServiceImp implements NoteService {
     
     private final NoteRepository noteRepository;
     private final EtudiantRepository etudiantRepository;
+    private final PartieDevoirRepository partieDevoirRepository;
 
     @Autowired
-    public NoteServiceImp(NoteRepository noteRepository, EtudiantRepository etudiantRepository) {
+    public NoteServiceImp(NoteRepository noteRepository, EtudiantRepository etudiantRepository, PartieDevoirRepository partieDevoirRepository) {
         this.noteRepository = noteRepository;
         this.etudiantRepository = etudiantRepository;
+        this.partieDevoirRepository = partieDevoirRepository;
     }
     
     @Override
@@ -78,5 +81,41 @@ public class NoteServiceImp implements NoteService {
         return dto;
     }
 
+
+    @Override
+    public NoteDTO createOrUpdateNote(Long noteId, Long etudiantId, Long partieDevoirId, float valeur) {
+        Note note;
+        if (noteId == null) { // Création d'une nouvelle note
+            note = new Note();
+        } else { // Mise à jour d'une note existante
+            note = noteRepository.findById(noteId).orElseThrow(() -> new RuntimeException("Note not found"));
+        }
+
+        // Récupération et liaison de l'étudiant et de la partie de devoir
+        Etudiant etudiant = etudiantRepository.findById(etudiantId)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        PartieDevoir partieDevoir = partieDevoirRepository.findById(partieDevoirId)
+                .orElseThrow(() -> new RuntimeException("Partie devoir not found"));
+
+        // Vérification que la note n'est pas supérieure aux points possibles pour la partie du devoir
+        if (valeur > partieDevoir.getPoints()) {
+            throw new IllegalArgumentException("La valeur de la note ne peut pas être supérieure aux points de la partie du devoir");
+        }
+
+        note.setEtudiant(etudiant);
+        note.setPartieDevoir(partieDevoir);
+        note.setValeur(valeur);
+        note = noteRepository.save(note);
+
+        NoteDTO dto = convertToNoteDTO(note);
+
+        return dto;
+    }
+
+
+    @Override
+    public void deleteNote(Long noteId) {
+        noteRepository.deleteById(noteId);
+    }
 
 }

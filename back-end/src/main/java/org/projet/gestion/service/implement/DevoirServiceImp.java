@@ -21,12 +21,15 @@ public class DevoirServiceImp implements DevoirService {
 
     @Autowired
     private PartieDevoirRepository partieDevoirRepository;
+
     @Override
     public Devoir creerDevoir(Devoir devoir) {
-
         Devoir savedDevoir = devoirRepository.save(devoir);
-
         if (devoir.getPointsDesParties() != null) {
+            float totalPoints = devoir.getPointsDesParties().stream().reduce(0f, Float::sum);
+            if (totalPoints != 20f) {
+                throw new IllegalArgumentException("La somme des points des parties doit être égale à 20");
+            }
             for (Float points : devoir.getPointsDesParties()) {
                 PartieDevoir partieDevoir = new PartieDevoir();
                 partieDevoir.setPoints(points);
