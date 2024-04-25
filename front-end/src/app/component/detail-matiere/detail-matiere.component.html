@@ -1,0 +1,34 @@
+<div class="align-center">
+  <mat-card>
+    <mat-card-content>
+      @if (matiere.id == null) {
+      <mat-label>
+        <p>Création</p>
+      </mat-label>
+      } @else {
+      <mat-label>
+        <p>Modification</p>
+      </mat-label>
+      }
+      <form class="example-form" [formGroup]="matiereFormGroup">
+        <mat-form-field class="example-full-width">
+          <mat-label>Dénomination</mat-label>
+          <input name="nom" matInput type="text" placeholder="Programmation avancée" [(ngModel)]="matiere.denomination"
+            [formControl]="denominationCtrlForm">
+          @if (matiere.denomination) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="matiere.denomination=''">
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <mat-error>{{getMessageErreur(denominationCtrlForm)}}</mat-error>
+        </mat-form-field>
+
+        <mat-card-actions class="example-full-width align-center">
+          <button mat-fab extended color="primary" (click)="enregistrer()">
+            Enregister
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

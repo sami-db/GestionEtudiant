@@ -15,7 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 // Configurer les chemins et les origines ici
                 registry.addMapping("/**") // Cela applique CORS à toutes les routes
-                        .allowedOrigins("http://localhost:4200") // Autorise cette origine pour les requêtes cross-origin
+                        .allowedOrigins("http://localhost:4200", "http://localhost:4200/*") // Autorise cette origine pour les requêtes cross-origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Les méthodes HTTP autorisées
                         .allowedHeaders("*") // Autorise tous les headers
                         .allowCredentials(true); // Permet d'envoyer des informations d'identification

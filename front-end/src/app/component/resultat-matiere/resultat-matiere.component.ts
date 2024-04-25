@@ -55,11 +55,11 @@ export class ResultatMatiereComponent {
   }
 
   ajouterMatiere(): void {
-    this.router.navigateByUrl('ajouter-matiere');
+    this.router.navigateByUrl('detail-matiere');
   }
 
   modifierMatiere(matiere: Matiere): void {
-    this.router.navigateByUrl('modifier-matiere');
+    this.router.navigateByUrl('detail-matiere');
   }
 
   supprimerMatiere(id: number): void {

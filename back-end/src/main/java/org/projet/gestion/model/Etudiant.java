@@ -43,6 +43,7 @@ public class Etudiant {
     private Classe classe;
     
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("etudiant")
     private Set<Note> notes = new HashSet<>();
 
 }
