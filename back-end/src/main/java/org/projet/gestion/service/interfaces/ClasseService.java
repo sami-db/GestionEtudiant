@@ -11,5 +11,4 @@ public interface ClasseService {
     void supprimerClasse(Long id);
     Classe creerClasse(ClasseDTO classeDTO);
 
-    //  afficherBulletin()
 }
