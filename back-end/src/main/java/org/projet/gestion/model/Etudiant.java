@@ -29,21 +29,23 @@ public class Etudiant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "nom")
     private String nom;
+
     @Column(name = "prenom")
     private String prenom;
+
     @Column(name = "photo")
     private String photo;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnore // Ignorer la propriété "classe" lors de la sérialisation JSON
     @JoinColumn(name = "classe_id")
-    @JsonIgnoreProperties({"etudiants"})
-    private Classe classe;
-    
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("etudiant")
-    private Set<Note> notes = new HashSet<>();
+    @JsonIgnoreProperties({"etudiants"}) // Ignorer la propriété "etudiants" de la classe lors de la sérialisation JSON pour éviter la récursivité
+    private Classe classe; // Classe associée à cet étudiant
 
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("etudiant") // Ignorer la propriété "etudiant" lors de la sérialisation JSON pour éviter la récursivité
+    private Set<Note> notes = new HashSet<>(); // Notes associées à cet étudiant
 }

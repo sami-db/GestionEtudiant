@@ -24,17 +24,17 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // Identifiant de la note
 
     @Column(name = "valeur")
-    private float valeur;
+    private float valeur; // Valeur de la note
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etudiant_id")
-    @JsonIgnore 
-    private Etudiant etudiant;
+    @JsonIgnore // Ignorer la propriété "etudiant" lors de la sérialisation JSON
+    private Etudiant etudiant; // Étudiant associé à cette note
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partiedevoir_id")
-    private PartieDevoir partieDevoir;
+    private PartieDevoir partieDevoir; // Partie du devoir associée à cette note
 }

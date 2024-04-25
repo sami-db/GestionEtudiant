@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.Set;
 
-
 @Entity
 @Getter
 @Setter
@@ -16,7 +15,7 @@ public class Matiere {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "denomination")
-    private String denomination;
 
+    @Column(name = "denomination")
+    private String denomination; // Nom de la matière
 }

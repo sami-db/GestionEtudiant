@@ -27,6 +27,7 @@ public class EtudiantController {
         this.noteService = noteService;
     }
 
+    // Afficher tous les étudiants avec leurs informations
     @GetMapping("/afficherEtudiants")
     public ResponseEntity<List<EtudiantDTO>> afficherEtudiants() {
         Iterable<Etudiant> etudiants = etudiantService.afficherEtudiants();
@@ -47,21 +48,20 @@ public class EtudiantController {
         return ResponseEntity.ok(etudiantDTOs);
     }
 
-
+    // Afficher un étudiant par ID
     @GetMapping("/afficherEtudiant/{id}")
     public Etudiant afficherEtudiant(@PathVariable Long id) {
         return etudiantService.afficherEtudiant(id);
     }
 
-    
+    // Afficher les étudiants n'ayant pas de classe assignée
     @GetMapping("/afficherEtudiantsSansClasse")
     public ResponseEntity<List<Etudiant>> afficherEtudiantsSansClasse() {
         List<Etudiant> etudiants = etudiantService.afficherEtudiantsSansClasse();
         return ResponseEntity.ok(etudiants);
     }
 
-    
-    
+    // Créer un nouvel étudiant
     @PostMapping("/creerEtudiant")
     public ResponseEntity<?> creerEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
         if (etudiantDTO.getNom() == null || etudiantDTO.getPrenom().trim().isEmpty()) {
@@ -83,22 +83,22 @@ public class EtudiantController {
         return ResponseEntity.ok(etudiantCree);
     }
 
-
+    // Modifier un étudiant existant par ID
     @PutMapping("/modifierEtudiant/{id}")
     public Etudiant modifierEtudiant(@PathVariable Long id, @RequestBody Etudiant etudiant) {
         return etudiantService.modifierEtudiant(id, etudiant);
     }
 
+    // Supprimer un étudiant par ID
     @DeleteMapping("/supprimerEtudiant")
     public void supprimerEtudiant(@RequestParam Long id) {
         etudiantService.supprimerEtudiant(id);
     }
 
+    // Afficher les notes d'un étudiant par ID d'étudiant
     @GetMapping("/afficherNoteParEtudiant/{etudiantId}")
     public ResponseEntity<List<NoteDTO>> getNotesParEtudiant(@PathVariable Long etudiantId) {
         List<NoteDTO> noteDTOs = noteService.afficherNotesParEtudiant(etudiantId);
         return ResponseEntity.ok(noteDTOs);
     }
-    
-    
 }

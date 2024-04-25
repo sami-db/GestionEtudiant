@@ -40,18 +40,15 @@ public class Devoir {
 
     @ManyToOne
     @JoinColumn(name = "matiere_id")
-    private Matiere matiere;
-    
+    private Matiere matiere; // Matière associée à ce devoir
+
     @ManyToOne
     @JoinColumn(name = "classe_id")
-    private Classe classe;
+    private Classe classe; // Classe associée à ce devoir
 
     @OneToMany(mappedBy = "devoir", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PartieDevoir> partiesDevoir = new HashSet<>();
-    
-    
+    private Set<PartieDevoir> partiesDevoir = new HashSet<>(); // Parties de ce devoir
+
     @Transient
-    private List<Float> pointsDesParties;
-
-
+    private List<Float> pointsDesParties; // Points des différentes parties de ce devoir, annoté comme transitoire pour ne pas être persisté
 }
